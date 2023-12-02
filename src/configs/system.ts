@@ -17,8 +17,8 @@ export default systemConfig;
 // implements
 function getSupabaseEnv() {
   return {
-    projectUrl: getStringEnv('SUPABASE_PROJECT_URL'),
-    apiKey: getStringEnv('SUPABASE_API_KEY'),
+    projectUrl: getStringEnv('NEXT_PUBLIC_SUPABASE_URL'),
+    apiKey: getStringEnv('SUPABASE_SERVICE_ROLE_KEY'),
   };
 }
 

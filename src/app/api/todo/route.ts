@@ -1,7 +1,12 @@
+import todoModel, { TodoCreateDto } from '@/models/todo';
+
 export async function GET(request: Request) {
-  return Response.json({ msg: 'get todo list' });
+  const list = await todoModel.findByAuthorId(1);
+  return Response.json({ success: true, data: list });
 }
 
 export async function POST(request: Request) {
-  return Response.json({ msg: 'create todo' });
+  const dto = await request.json();
+  const todo = await todoModel.create(dto as TodoCreateDto);
+  return Response.json({ success: true, data: todo });
 }
