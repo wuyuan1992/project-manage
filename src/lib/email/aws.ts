@@ -46,7 +46,7 @@ export default class AwsEmailSender implements EmailSender {
             console.error('AWS SES error', err);
             resolve(false);
           } else {
-            console.log(data);
+            console.error('AWS SES sent email');
             resolve(true);
           }
         },

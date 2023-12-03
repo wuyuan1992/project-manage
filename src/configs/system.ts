@@ -10,6 +10,9 @@ const systemConfig = {
   get email() {
     return getEmailEnv();
   },
+  get app() {
+    return getAppEnv();
+  },
 };
 
 export default systemConfig;
@@ -35,5 +38,16 @@ function getEmailEnv() {
       sourceEmail: getStringEnv('AWS_SES_SOURCE_EMAIL'),
       awsRegion: getStringEnv('AWS_REGION', 'ap-northeast-2'),
     },
+    resend: {
+      apiKey: getStringEnv('RESEND_API_KEY'),
+      sourceEmail: getStringEnv('RESEND_SOURCE_EMAIL'),
+    },
+  };
+}
+
+function getAppEnv() {
+  return {
+    name: getStringEnv('APP_NAME', 'Wuyuan'),
+    website: getStringEnv('APP_WEBSITE', 'http://www.x.com'),
   };
 }
