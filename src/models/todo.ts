@@ -1,5 +1,27 @@
 import db from '@/lib/prisma';
 import { TodoStatus } from '@prisma/client';
+import { z } from 'zod';
+
+const todoStatusValues = Object.values(TodoStatus) as [TodoStatus, ...TodoStatus[]];
+// [TodoStatus.PLANNING, TodoStatus.PROCESSING, TodoStatus.CANCELED, TodoStatus.COMPLETED, TodoStatus.ARCHIVED]
+
+export const TodoCreateSchema = z
+  .object({
+    title: z.string().max(32),
+    content: z.string().optional(),
+    status: z.enum(todoStatusValues).optional(),
+    authorId: z.number(),
+  })
+  .strict(); // forbid additional fields
+
+export const TodoUpdateSchema = z
+  .object({
+    title: z.string().max(32).optional(),
+    content: z.string().optional(),
+    status: z.enum(todoStatusValues).optional(),
+    authorId: z.number().optional(),
+  })
+  .strict(); // forbid additional fields
 
 export interface TodoCreateDto {
   title: string;
@@ -7,6 +29,7 @@ export interface TodoCreateDto {
   status?: TodoStatus;
   authorId: number;
 }
+
 export interface TodoUpdateDto {
   title?: string;
   content?: string;

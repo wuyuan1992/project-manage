@@ -1,4 +1,5 @@
-import todoModel, { TodoCreateDto } from '@/models/todo';
+import todoModel, { TodoCreateDto, TodoCreateSchema } from '@/models/todo';
+import { validateRequest } from '@/utils/validator';
 
 export async function GET(request: Request) {
   const list = await todoModel.findByAuthorId(1);
@@ -6,7 +7,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const dto = await request.json();
-  const todo = await todoModel.create(dto as TodoCreateDto);
-  return Response.json({ success: true, data: todo });
+  const requestBody = await request.json();
+  return validateRequest<TodoCreateDto>(requestBody, TodoCreateSchema, async (dto) => {
+    const todo = await todoModel.create(dto);
+    return Response.json({ success: true, data: todo });
+  });
 }

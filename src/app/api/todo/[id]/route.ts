@@ -1,4 +1,5 @@
-import todoModel, { TodoUpdateDto } from '@/models/todo';
+import todoModel, { TodoUpdateDto, TodoUpdateSchema } from '@/models/todo';
+import { validateRequest } from '@/utils/validator';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   const data = await todoModel.getById(parseInt(params.id, 10));
@@ -6,11 +7,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
 }
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  const todoId = parseInt(params.id, 10);
-  const dto = await request.json();
-
-  const data = await todoModel.update(todoId, dto as TodoUpdateDto);
-  return Response.json({ success: true, data });
+  const requestBody = await request.json();
+  return validateRequest<TodoUpdateDto>(requestBody, TodoUpdateSchema, async (dto) => {
+    const data = await todoModel.update(parseInt(params.id, 10), dto);
+    return Response.json({ success: true, data });
+  });
 }
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
