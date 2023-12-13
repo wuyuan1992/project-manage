@@ -1,5 +1,6 @@
 import * as configs from '@/configs';
 import AwsEmailSender from './aws';
+import GmailSender from './gmail';
 import ResendEmailSender from './resend';
 
 export abstract class EmailSender {
@@ -7,12 +8,14 @@ export abstract class EmailSender {
 }
 
 function initEmailSender() {
-  switch (configs.system.email.provider as 'AWS' | 'RESEND') {
+  switch (configs.system.email.provider as 'AWS' | 'RESEND' | 'GMAIL') {
     case 'RESEND':
       return new ResendEmailSender();
     case 'AWS':
-    default:
       return new AwsEmailSender();
+    case 'GMAIL':
+    default:
+      return new GmailSender();
   }
 }
 

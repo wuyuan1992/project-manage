@@ -4,7 +4,7 @@ export function getEnv<T>(key: string) {
 
 export function getBooleanEnv(key: string, defaultValue: boolean) {
   if (process.env[key] === undefined) return defaultValue;
-  return Boolean(process.env[key]);
+  return Boolean(process.env[key] === 'true');
 }
 
 export function getNumericEnv(key: string, defaultValue: number) {

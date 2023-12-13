@@ -1,4 +1,4 @@
-import { getStringEnv } from './util';
+import { getBooleanEnv, getNumericEnv, getStringEnv } from './util';
 
 const systemConfig = {
   get supabase() {
@@ -31,7 +31,7 @@ function getPostgresEnv() {
 
 function getEmailEnv() {
   return {
-    provider: getStringEnv('EMAIL_PROVIDER', 'AWS'),
+    provider: getStringEnv('EMAIL_PROVIDER', 'GMAIL'),
     aws: {
       accessKeyId: getStringEnv('AWS_ACCESS_KEY_ID'),
       secretAccessKey: getStringEnv('AWS_SECRET_ACCESS_KEY'),
@@ -41,6 +41,14 @@ function getEmailEnv() {
     resend: {
       apiKey: getStringEnv('RESEND_API_KEY'),
       sourceEmail: getStringEnv('RESEND_SOURCE_EMAIL'),
+    },
+    gmail: {
+      username: getStringEnv('GMAIL_USERNAME'),
+      password: getStringEnv('GMAIL_PASSWORD'),
+      from: getStringEnv('GMAIL_SENDER_FROM'),
+      host: getStringEnv('GMAIL_SENDER_HOST'),
+      port: getNumericEnv('GMAIL_SENDER_PORT', 465),
+      secure: getBooleanEnv('GMAIL_SENDER_SECURE', true),
     },
   };
 }
