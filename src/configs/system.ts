@@ -65,12 +65,23 @@ function getAppEnv() {
 
 function getAIEnv() {
   return {
-    provider: getStringEnv('AI_PROVIDER', 'CLOUDFLARE'),
+    provider: getStringEnv('AI_PROVIDER', 'GOOGLE'),
     cloudflare: {
       apiEmail: getStringEnv('CLOUDFLARE_API_EMAIL'),
       apiKey: getStringEnv('CLOUDFLARE_API_KEY'),
       identifier: getStringEnv('CLOUDFLARE_IDENTIFIER'),
       model: getStringEnv('CLOUDFLARE_AI_MODEL'),
+    },
+    google: {
+      model: getStringEnv('GOOGLE_AI_MODEL', 'gemini-pro'),
+      visionModel: getStringEnv('GOOGLE_AI_VISION_MODEL', 'gemini-pro-vision'),
+      apiKey: getStringEnv('GOOGLE_GEMINI_API_KEY'),
+      generationConfig: {
+        maxOutputTokens: getNumericEnv('GOOGLE_GEMINI_API_CONFIG_MAX_TOKEN', 2048),
+        temperature: getNumericEnv('GOOGLE_GEMINI_API_CONFIG_TEMPERATURE', 0.9),
+        topP: getNumericEnv('GOOGLE_GEMINI_API_CONFIG_TOP_P', 0.1),
+        topK: getNumericEnv('GOOGLE_GEMINI_API_CONFIG_TOP_K', 16),
+      },
     },
   };
 }

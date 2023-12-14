@@ -1,15 +1,18 @@
 import * as configs from '@/configs';
 import CloudflareAI from './cloudflare';
+import GoogleAI from './google';
 
 export abstract class AI {
   abstract completion<T>(prompt: string): Promise<T>;
 }
 
 function initAI() {
-  switch (configs.system.ai.provider as 'CLOUDFLARE') {
+  switch (configs.system.ai.provider as 'CLOUDFLARE' | 'GOOGLE') {
     case 'CLOUDFLARE':
-    default:
       return new CloudflareAI();
+    case 'GOOGLE':
+    default:
+      return new GoogleAI();
   }
 }
 
