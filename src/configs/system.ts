@@ -13,6 +13,9 @@ const systemConfig = {
   get app() {
     return getAppEnv();
   },
+  get ai() {
+    return getAIEnv();
+  },
 };
 
 export default systemConfig;
@@ -57,5 +60,17 @@ function getAppEnv() {
   return {
     name: getStringEnv('APP_NAME', 'Wuyuan'),
     website: getStringEnv('APP_WEBSITE', 'http://www.x.com'),
+  };
+}
+
+function getAIEnv() {
+  return {
+    provider: getStringEnv('AI_PROVIDER', 'CLOUDFLARE'),
+    cloudflare: {
+      apiEmail: getStringEnv('CLOUDFLARE_API_EMAIL'),
+      apiKey: getStringEnv('CLOUDFLARE_API_KEY'),
+      identifier: getStringEnv('CLOUDFLARE_IDENTIFIER'),
+      model: getStringEnv('CLOUDFLARE_AI_MODEL'),
+    },
   };
 }
