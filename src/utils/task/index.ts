@@ -1,4 +1,4 @@
-import getCompletion from '../ai/getCompletion';
+import { getCompletion } from '@/utils/ai/getCompletion';
 import { Task, TaskManager } from './Task';
 
 export async function handleTasks(tasks: Task[]) {

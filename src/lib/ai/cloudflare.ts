@@ -29,4 +29,14 @@ export default class CloudflareAI implements AI {
       throw new Error('CloudflareAI fetch error');
     }
   }
+
+  async chat<T>(prompt: string): Promise<T> {
+    // TODO
+    return 'TODO' as T;
+  }
+
+  async vision<T>(prompt: string): Promise<T> {
+    // TODO
+    return 'TODO' as T;
+  }
 }

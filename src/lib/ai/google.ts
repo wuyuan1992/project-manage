@@ -47,7 +47,20 @@ export default class GoogleAI implements AI {
       throw new Error('GoogleAI visionModel fetch error');
     }
   }
+
+  async chat<T>(prompt: string, history: { role: 'user' | 'model'; parts: string }[] = []): Promise<T> {
+    const chat = this.completionModel.startChat({
+      history,
+      generationConfig: {
+        maxOutputTokens: 1024,
+      },
+    });
+    const result = (await chat.sendMessage(prompt)).response.text();
+    console.log(result);
+    return result as T;
+  }
 }
+
 function fileToGenerativePart({ path, mimeType }: { path: string; mimeType: string }) {
   return {
     inlineData: {

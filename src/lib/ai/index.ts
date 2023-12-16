@@ -2,8 +2,15 @@ import * as configs from '@/configs';
 import CloudflareAI from './cloudflare';
 import GoogleAI from './google';
 
+export interface History {
+  role: 'user' | 'model';
+  parts: string;
+}
+
 export abstract class AI {
   abstract completion<T>(prompt: string): Promise<T>;
+  abstract chat<T>(prompt: string, history?: History[]): Promise<T>;
+  abstract vision<T>(prompt: string, files: { path: string; mimeType: string }[]): Promise<T>;
 }
 
 function initAI() {
